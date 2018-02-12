@@ -7,11 +7,34 @@
       <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
   </head>
   <body>
-    <div id="map"></div>
-    
+      <div class="container">
+          <div id="TopBar"> 
+              <span onclick="openNav()">&#9776; open</span>
+              <h2 style="margin-left: 40%">Neighborhood Map Project</h2>
+          </div>
+          <div id="MySideBar" class="left-sidebar">
+              <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+              <ul>My Locations:
+                  <li>location a</li>
+                  <li>location b</li>
+                  <li>location c</li>
+                  <li>location d</li>
+                  <li>location e</li>
+              </ul>
+          </div>
+          
+          <div id="map"></div>
+    </div>
+      
+      <script>
+          function openNav() {
+              document.getElementById("MySideBar").style.width = "250px";
+          }
+          function closeNav() {
+              document.getElementById("MySideBar").style.width = "0";
+          }
+      </script>
       <script async src="js/app.js"></script>
-    <script async defer
-     src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD74NAYk_mwowxcqJwlbTqMxJafJVmyJac&callback=initMap">
-    </script>
+      <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD74NAYk_mwowxcqJwlbTqMxJafJVmyJac&callback=initMap"></script>
   </body>
 </html>

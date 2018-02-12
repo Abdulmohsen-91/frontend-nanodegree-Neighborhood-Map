@@ -60,13 +60,17 @@ function initMap() {
         var marker = new google.maps.Marker({
              position: position,
              map: map,
-             title: name
+             title: name,
+             animation: google.maps.Animation.DROP
          });  
+        
+        markers.push(marker);        
         marker.addListener('click', function() {
         populateInfoWindow(this, infowindow);
         });
     }
 }
+console.log(markers);
 
 // the below code is taken from the lesson 17.7
 function populateInfoWindow(marker, infowindow) {
