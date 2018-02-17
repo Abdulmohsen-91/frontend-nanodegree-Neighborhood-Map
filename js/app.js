@@ -61,27 +61,54 @@ function initMap() {
              position: position,
              map: map,
              title: name,
+            wikiPage: '',
              animation: google.maps.Animation.DROP
          });  
-        
         markers.push(marker);        
-        marker.addListener('click', function() {
-        populateInfoWindow(this, infowindow);
-        });
+        addListeners(marker, infowindow);
     }
 }
-console.log(markers);
 
-// the below code is taken from the lesson 17.7
+function addListeners(marker, infowindow) {
+    marker.addListener('click', function() {
+        populateInfoWindow(marker, infowindow);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+            marker.setAnimation(null);
+        }, 3000);
+    });
+    getInfoFromWiki(marker);      
+}
+
+// the below code is taken from the lesson 17.7 with some modifications
 function populateInfoWindow(marker, infowindow) {
         // Check to make sure the infowindow is not already opened on this marker.
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
-          infowindow.setContent('<div>' + marker.title + '</div>');
+          infowindow.setContent('<div>' + marker.title +
+            '</div> <div> <a href="' + marker.wikiPage + '"> Wikipedia Page </a> </div>');
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick',function(){
             infowindow.setMarker = null;
           });
         }
-      }
+}
+
+// Get data from Wiki API
+function getInfoFromWiki (marker) {
+    var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+    var wikiRequestTimeout = setTimeout(function(){
+        alert("failed to get wikipedia resources");
+    }, 8000);
+
+    $.ajax({
+        url: wikiUrl,
+        dataType: "jsonp",
+        jsonp: "callback",
+        success: function( response ) {
+            marker.wikiPage = response[3][0];
+            clearTimeout(wikiRequestTimeout);
+        }
+    });
+}
