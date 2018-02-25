@@ -14,12 +14,9 @@
           </div>
           <div id="MySideBar" class="left-sidebar">
               <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-              <ul>My Locations:
-                  <li>location a</li>
-                  <li>location b</li>
-                  <li>location c</li>
-                  <li>location d</li>
-                  <li>location e</li>
+              <h3>My Locations</h3>
+              <ul data-bind="foreach: myLocations">
+                  <li data-bind="text: name, click: $parent.clickedLocation"></li>
               </ul>
               <input type="text" style="width: 80%; font-size: 20px">
           </div>
@@ -35,8 +32,8 @@
               document.getElementById("MySideBar").style.width = "0";
           }
       </script>
-      <script src="js/lib/knockout-3.4.0.js"></script>
       <script src="js/lib/jquery-3.3.1.min.js"></script>
+      <script src="js/lib/knockout-3.4.0.js"></script>
       <script async src="js/app.js"></script>
       <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyD74NAYk_mwowxcqJwlbTqMxJafJVmyJac&callback=initMap"></script>
   </body>

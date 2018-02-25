@@ -67,6 +67,7 @@ function initMap() {
         markers.push(marker);        
         addListeners(marker, infowindow);
     }
+    ko.applyBindings(new ViewModel());
 }
 
 function addListeners(marker, infowindow) {
@@ -112,3 +113,19 @@ function getInfoFromWiki (marker) {
         }
     });
 }
+
+
+function ViewModel() {
+    console.log(this);
+    var self = this;
+    
+    self.locationList = ko.observableArray([]);
+    
+    locationList = myLocations.slice();
+    console.log(locationList);
+    
+    self.clickedLocation = function(data) {
+        console.log(this);
+        //markers[0].setVisible(false);
+		};
+};
