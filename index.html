@@ -15,7 +15,7 @@
           <div id="MySideBar" class="left-sidebar">
               <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
               <h3>My Locations</h3>
-              <ul data-bind="foreach: myLocations">
+              <ul data-bind="foreach: locationList">
                   <li data-bind="text: name, click: $parent.clickedLocation"></li>
               </ul>
               <input type="text" style="width: 80%; font-size: 20px">

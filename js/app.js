@@ -114,6 +114,10 @@ function getInfoFromWiki (marker) {
     });
 }
 
+var locationsConstructor = function(info) {
+    console.log(info);
+    this.name = ko.observable(info.name);
+};
 
 function ViewModel() {
     console.log(this);
@@ -121,11 +125,11 @@ function ViewModel() {
     
     self.locationList = ko.observableArray([]);
     
-    locationList = myLocations.slice();
-    console.log(locationList);
+    myLocations.forEach(function (info) {
+		self.locationList.push(new locationsConstructor(info));
+	});
     
-    self.clickedLocation = function(data) {
-        console.log(this);
-        //markers[0].setVisible(false);
+    self.clickedLocation = function() {
+        console.log("tttttt");
 		};
 };
