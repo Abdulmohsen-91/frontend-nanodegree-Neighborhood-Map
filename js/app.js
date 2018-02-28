@@ -66,6 +66,8 @@ function initMap() {
          });  
         markers.push(marker);        
         addListeners(marker, infowindow);
+        myLocations[i].marker = marker;
+        myLocations[i].infowindow = infowindow;
     }
     ko.applyBindings(new ViewModel());
 }
@@ -73,12 +75,16 @@ function initMap() {
 function addListeners(marker, infowindow) {
     marker.addListener('click', function() {
         populateInfoWindow(marker, infowindow);
-        marker.setAnimation(google.maps.Animation.BOUNCE);
-        setTimeout(function() {
-            marker.setAnimation(null);
-        }, 3000);
+        setAnimation(marker);
     });
     getInfoFromWiki(marker);      
+}
+// create setAnimation function for reusability
+function setAnimation(clickedMarker) {
+    clickedMarker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+            clickedMarker.setAnimation(null);
+        }, 3000);
 }
 
 // the below code is taken from the lesson 17.7 with some modifications
@@ -114,22 +120,20 @@ function getInfoFromWiki (marker) {
     });
 }
 
-var locationsConstructor = function(info) {
-    console.log(info);
-    this.name = ko.observable(info.name);
-};
-
-function ViewModel() {
+// this viewModel is inspired by lesson 15, the Cat Clicker project
+var ViewModel = function() {
     console.log(this);
     var self = this;
     
-    self.locationList = ko.observableArray([]);
+    this.locationList = ko.observableArray([]);
     
-    myLocations.forEach(function (info) {
-		self.locationList.push(new locationsConstructor(info));
+    myLocations.forEach(function (locationItem) {
+		self.locationList.push(locationItem);
 	});
     
-    self.clickedLocation = function() {
-        console.log("tttttt");
+    // for clicked location, it will open related infowindow
+    self.clickedLocation = function(clickedItem) {
+        populateInfoWindow(clickedItem.marker, clickedItem.infowindow);
+        setAnimation(clickedItem.marker);
 		};
 };
