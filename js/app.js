@@ -136,4 +136,21 @@ var ViewModel = function() {
         populateInfoWindow(clickedItem.marker, clickedItem.infowindow);
         setAnimation(clickedItem.marker);
 		};
+    
+    // to get the input from a user
+    self.searchedText = ko.observable(""); 
+    self.filteredLocations = ko.computed(function() {
+        // to gather the matched location in an array
+        var matchedLocation = [];
+        for (var x = 0; x < myLocations.length; x++) {
+            if (myLocations[x].name.toLowerCase().includes(self.searchedText()
+                    .toLowerCase())) {
+                markers[x].setVisible(true);
+                matchedLocation.push(myLocations[x]);
+            } else {
+                markers[x].setVisible(false);
+            }
+        }
+        return matchedLocation;
+    });
 };
