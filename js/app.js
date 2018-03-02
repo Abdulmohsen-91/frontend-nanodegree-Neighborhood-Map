@@ -93,7 +93,7 @@ function populateInfoWindow(marker, infowindow) {
         if (infowindow.marker != marker) {
           infowindow.marker = marker;
           infowindow.setContent('<div>' + marker.title +
-            '</div> <div> <a href="' + marker.wikiPage + '"> Wikipedia Page </a> </div>');
+            '</div> <div> <a href="' + marker.wikiPage + '" target="_blank"> Wikipedia Page </a> </div>');
           infowindow.open(map, marker);
           // Make sure the marker property is cleared if the infowindow is closed.
           infowindow.addListener('closeclick',function(){
@@ -107,7 +107,7 @@ function getInfoFromWiki (marker) {
     var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
     var wikiRequestTimeout = setTimeout(function(){
         alert("failed to get wikipedia resources");
-    }, 8000);
+    }, 5000);
 
     $.ajax({
         url: wikiUrl,
@@ -154,3 +154,8 @@ var ViewModel = function() {
         return matchedLocation;
     });
 };
+
+// Error handling for google map
+function mapError() {
+    alert('Failed to load Google Map!!!\nPlease refresh the page, and try again!');
+}
